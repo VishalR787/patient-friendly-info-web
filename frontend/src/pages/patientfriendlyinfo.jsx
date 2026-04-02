@@ -141,6 +141,51 @@ export default function PatientFriendlyInfo() {
         </div>
       </div>
 
+      {/* ABOUT */}
+      <section id="about" style={{ padding:"88px 0", background:"#fff" }}>
+        <div style={{ maxWidth:1080, margin:"0 auto", padding:"0 28px" }}>
+          <div style={{ display:"grid", gridTemplateColumns:"1.05fr .95fr", gap:32, alignItems:"start" }}>
+            <div className="pfi-reveal">
+              <span style={{ display:"inline-block", padding:"5px 16px", borderRadius:50, fontSize:11, fontWeight:800, letterSpacing:"1.3px", textTransform:"uppercase", marginBottom:14, background:"#e8f8f5", color:"#1e8a74" }}>About</span>
+              <h2 style={{ fontFamily:"'Lora',serif", fontSize:"clamp(26px,3.8vw,40px)", color:"#0e2033", letterSpacing:"-.6px", marginBottom:14 }}>
+                Why PatientFriendlyInfo exists.
+              </h2>
+              <p style={{ fontSize:15, color:"#6b8499", lineHeight:1.8, marginBottom:14 }}>
+                Most patients leave with numbers and abbreviations they do not understand. That confusion leads to fear, missed follow-ups, and delayed action.
+              </p>
+              <p style={{ fontSize:15, color:"#6b8499", lineHeight:1.8, marginBottom:20 }}>
+                PatientFriendlyInfo closes that gap by converting clinical lab reports into clear, plain-language explanations patients can actually use.
+              </p>
+              <div style={{ display:"flex", gap:10, flexWrap:"wrap" }}>
+                {["Clear language", "Action-focused guidance", "Built with clinicians", "Privacy-first workflow"].map((item, idx) => (
+                  <span key={idx} style={{ fontSize:12, fontWeight:700, padding:"6px 12px", borderRadius:50, background:"#f7faf9", color:"#1e3448", border:"1px solid #e0eaf3" }}>
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </div>
+            <div className="pfi-reveal" style={{ transitionDelay:".12s" }}>
+              <div style={{ background:"#f7faf9", border:"1px solid #d7e4ef", borderRadius:18, padding:"22px 20px" }}>
+                <h3 style={{ fontFamily:"'Lora',serif", fontSize:22, color:"#0e2033", marginBottom:12 }}>What makes it useful</h3>
+                <div style={{ display:"grid", gap:10 }}>
+                  {[
+                    ["1", "Medical terms translated into plain language"],
+                    ["2", "Risk context shown with easy severity cues"],
+                    ["3", "Personalized explanations for each lab value"],
+                    ["4", "Multilingual output for broader accessibility"],
+                  ].map(([n, txt], i) => (
+                    <div key={i} style={{ display:"flex", gap:12, alignItems:"center", background:"#fff", border:"1px solid #e0eaf3", borderRadius:12, padding:"10px 12px" }}>
+                      <div style={{ width:24, height:24, borderRadius:"50%", background:"#e8f8f5", color:"#1e8a74", fontSize:12, fontWeight:800, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>{n}</div>
+                      <div style={{ fontSize:13, color:"#1e3448", lineHeight:1.5 }}>{txt}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* HOW IT WORKS */}
       <section id="how-it-works" style={{ padding:"88px 0", background:"#0e2033" }}>
         <div style={{ maxWidth:1080, margin:"0 auto", padding:"0 28px" }}>
