@@ -382,7 +382,7 @@ export default function PatientFriendlyInfo() {
         <div style={{ maxWidth:1080, margin:"0 auto", padding:"0 28px" }}>
           <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", flexWrap:"wrap", gap:16 }}>
             <div>
-              <div style={{ fontFamily:"'Lora',serif", fontSize:17, color:"#fff", fontWeight:700 }}>VipsTechnologies<span style={{ color:"#2db89a" }}>Info</span></div>
+              <div style={{ fontFamily:"'Lora',serif", fontSize:17, color:"#fff", fontWeight:700 }}>Vips<span style={{ color:"#2db89a" }}>Technologies</span></div>
               <div style={{ fontSize:11, color:"#2a4a6a", marginTop:3 }}>Making health understandable for everyone</div>
             </div>
             <div style={{ display:"flex", gap:22 }}>
