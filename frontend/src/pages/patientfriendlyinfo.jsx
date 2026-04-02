@@ -53,7 +53,7 @@ export default function PatientFriendlyInfo() {
         <div style={{ maxWidth:1080, margin:"0 auto", padding:"0 28px", display:"flex", alignItems:"center", justifyContent:"space-between", height:64 }}>
           <div style={{ display:"flex", alignItems:"center", gap:10 }}>
             <div style={{ width:36, height:36, borderRadius:10, background:"linear-gradient(135deg,#2db89a,#1e8a74)", display:"flex", alignItems:"center", justifyContent:"center", fontSize:18 }}>🧬</div>
-            <div style={{ fontFamily:"'Lora',serif", fontSize:18, fontWeight:700, color:"#0e2033" }}>PatientFriendly<span style={{ color:"#2db89a" }}>Info</span></div>
+            <div style={{ fontFamily:"'Lora',serif", fontSize:18, fontWeight:700, color:"#0e2033" }}>Vips<span style={{ color:"#2db89a" }}>Technologies</span></div>
           </div>
           <div style={{ display:"flex", gap:28 }}>
             {["#about","#how-it-works","#product","#roadmap","#founders","#contact"].map((h,i) => (
@@ -391,10 +391,7 @@ export default function PatientFriendlyInfo() {
               ))}
             </div>
             <div style={{ textAlign:"right" }}>
-              <div style={{ color:"#4a6a8a", fontSize:12 }}>© 2026 PatientFriendlyInfo Ltd.</div>
-              <div style={{ color:"#2a4a6a", fontSize:11, marginTop:3 }}>
-                <button onClick={() => navigate("/app")} style={{ background:"none", border:"none", color:"#2a4a6a", cursor:"pointer", fontSize:11, fontFamily:"Nunito,sans-serif", textDecoration:"underline" }}>Go to Analyzer App →</button>
-              </div>
+              <div style={{ color:"#4a6a8a", fontSize:12 }}>© 2026 Vips Technologies</div>
             </div>
           </div>
         </div>
