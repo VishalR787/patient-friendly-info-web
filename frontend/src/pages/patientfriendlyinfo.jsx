@@ -209,7 +209,7 @@ export default function PatientFriendlyInfo() {
                 bio:"Dr. Pushpakaran is a Consultant Gastroenterologist with over 25 years of clinical experience. He qualified from Tamil Nadu Dr. MGR Medical University and trained at King's College Hospital, London, holding Fellowship of the Royal College of Physicians.\n\nA digital health pioneer, he holds a postgraduate diploma in Digital Health Leadership and serves as Clinical Lead for AI in Gastroenterology at the British Society of Gastroenterology.",
                 tags:["Consultant Gastroenterologist","BSG AI Lead","Digital Health Leadership","Fellow, Royal College of Physicians"] },
               { role:"Chief Technology Officer", roleClass:"cto", name:"Vishal Raghav V", icon:"👨‍💻", iconBg:"linear-gradient(135deg,#fff2ee,#ffd5c5)", roleColor:"#b85030", topBg:"linear-gradient(90deg,#ff8c6b,#ffb89e)",
-                bio:"Vishal is a computer science researcher and software engineer specialising in AI, machine learning, and NLP. Currently pursuing his degree at SRM Institute of Science and Technology, he has published research in medical AI — including pioneering work on fine-tuning large language models for clinical lab report interpretation.\n\nAt PatientFriendlyInfo, Vishal leads all technical development — from the core AI engine to the full-stack application architecture.",
+                bio:"Vishal is a computer science researcher and software engineer specialising in AI, machine learning, and NLP. Currently pursuing his degree at SRM Institute of Science and Technology, he has published research in medical AI — including pioneering work on fine-tuning large language models for clinical lab report interpretation.\n\nAt VipsTechnologies , Vishal leads all technical development — from the core AI engine to the full-stack application architecture.",
                 tags:["AI & Machine Learning","Medical NLP","Full-Stack Engineering","LLM Research"] },
             ].map((f,i) => (
               <div key={i} className="pfi-fc pfi-reveal" style={{ background:"#fff", border:"1px solid #e0eaf3", borderRadius:24, padding:"34px 30px", boxShadow:"0 4px 24px rgba(14,32,51,.05)", transition:"transform .25s,box-shadow .25s", position:"relative", overflow:"hidden", transitionDelay:`${i*0.1}s` }}>
@@ -336,7 +336,7 @@ export default function PatientFriendlyInfo() {
               <h2 style={{ fontFamily:"'Lora',serif", fontSize:"clamp(26px,3.8vw,40px)", color:"#0e2033", letterSpacing:"-.6px", marginBottom:14 }}>We'd love to hear from you.</h2>
               <p style={{ fontSize:15, color:"#6b8499", lineHeight:1.8, marginBottom:28 }}>Whether you're a patient, a healthcare professional, a potential partner, or simply someone who believes in what we're building — our door is always open.</p>
               <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
-                {[["🌐","www.patientfriendlyinfo.com","Our home on the web"],["✉️","hello@patientfriendlyinfo.com","We reply within 24 hours"],["🚀","Currently in active development","Demo available — full launch coming soon"]].map(([icon,text,sub],i) => (
+                {[["🌐","https://vips-technologies.vercel.app/","Our home on the web"],["✉️","hello@vips-technologies.com","We reply within 24 hours"],["🚀","Currently in active development","Demo available — full launch coming soon"]].map(([icon,text,sub],i) => (
                   <div key={i} style={{ display:"flex", gap:12, alignItems:"center" }}>
                     <div style={{ width:38, height:38, borderRadius:11, flexShrink:0, background:"#e8f8f5", border:"1px solid rgba(45,184,154,.2)", display:"flex", alignItems:"center", justifyContent:"center", fontSize:16 }}>{icon}</div>
                     <div>
@@ -382,7 +382,7 @@ export default function PatientFriendlyInfo() {
         <div style={{ maxWidth:1080, margin:"0 auto", padding:"0 28px" }}>
           <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", flexWrap:"wrap", gap:16 }}>
             <div>
-              <div style={{ fontFamily:"'Lora',serif", fontSize:17, color:"#fff", fontWeight:700 }}>PatientFriendly<span style={{ color:"#2db89a" }}>Info</span></div>
+              <div style={{ fontFamily:"'Lora',serif", fontSize:17, color:"#fff", fontWeight:700 }}>VipsTechnologies<span style={{ color:"#2db89a" }}>Info</span></div>
               <div style={{ fontSize:11, color:"#2a4a6a", marginTop:3 }}>Making health understandable for everyone</div>
             </div>
             <div style={{ display:"flex", gap:22 }}>
