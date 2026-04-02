@@ -56,9 +56,9 @@ export default function PatientFriendlyInfo() {
             <div style={{ fontFamily:"'Lora',serif", fontSize:18, fontWeight:700, color:"#0e2033" }}>Vips<span style={{ color:"#2db89a" }}>Technologies</span></div>
           </div>
           <div style={{ display:"flex", gap:28 }}>
-            {["#about","#how-it-works","#features","#founders","#roadmap","#contact"].map((h,i) => (
+            {["#about","#how-it-works","#features","#roadmap","#founders","#contact"].map((h,i) => (
               <a key={i} href={h} className="pfi-nav-link" style={{ fontSize:14, fontWeight:600, color:"#6b8499", textDecoration:"none", transition:"color .2s" }}>
-                {["About","How It Works","Features","Team","Roadmap","Contact"][i]}
+                {["About","How It Works","Features","Roadmap","Team","Contact"][i]}
               </a>
             ))}
           </div>
@@ -213,7 +213,7 @@ export default function PatientFriendlyInfo() {
       </section>
 
       {/* FEATURES */}
-      <section id="product" style={{ padding:"88px 0", background:"#f7faf9" }}>
+      <section id="features" style={{ padding:"88px 0", background:"#f7faf9" }}>
         <div style={{ maxWidth:1080, margin:"0 auto", padding:"0 28px" }}>
           <div className="pfi-reveal" style={{ textAlign:"center", marginBottom:48 }}>
             <span style={{ display:"inline-block", padding:"5px 16px", borderRadius:50, fontSize:11, fontWeight:800, letterSpacing:"1.3px", textTransform:"uppercase", marginBottom:14, background:"#e8f8f5", color:"#1e8a74" }}>Features</span>
