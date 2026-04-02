@@ -58,7 +58,7 @@ export default function PatientFriendlyInfo() {
           <div style={{ display:"flex", gap:28 }}>
             {["#about","#how-it-works","#features","#founders","#roadmap","#contact"].map((h,i) => (
               <a key={i} href={h} className="pfi-nav-link" style={{ fontSize:14, fontWeight:600, color:"#6b8499", textDecoration:"none", transition:"color .2s" }}>
-                {["About","How It Works","Features","Founders","Roadmap","Contact"][i]}
+                {["About","How It Works","Features","Team","Roadmap","Contact"][i]}
               </a>
             ))}
           </div>
