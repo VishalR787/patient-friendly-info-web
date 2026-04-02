@@ -254,12 +254,12 @@ export default function PatientFriendlyInfo() {
               </div>
               <div style={{ background:"#f7faf9", border:"1px solid #d7e4ef", borderRadius:20, padding:"20px 22px", marginLeft:22 }}>
                 {[
-                  "? Report upload & text parsing",
-                  "? AI condition detection engine",
-                  "? Plain English via local LLM (Ollama)",
-                  "? Severity scoring & MetricBar UI",
-                  "? Multilingual support (20+ languages)",
-                  "? Secure, GDPR-compliant data handling",
+                  "-> Report upload & text parsing",
+                  "-> AI condition detection engine",
+                  "-> Plain English via local LLM (Ollama)",
+                  "-> Severity scoring & MetricBar UI",
+                  "-> Multilingual support (20+ languages)",
+                  "-> Secure, GDPR-compliant data handling",
                 ].map((item, idx) => (
                   <div key={idx} style={{ fontSize:16, color:"#1e3448", marginBottom:11 }}>{item}</div>
                 ))}
@@ -272,12 +272,12 @@ export default function PatientFriendlyInfo() {
             <div className="pfi-reveal" style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:56, alignItems:"center", marginBottom:44, position:"relative" }}>
               <div style={{ background:"#f7faf9", border:"1px solid #d7e4ef", borderRadius:20, padding:"20px 22px", marginRight:22 }}>
                 {[
-                  "? Personalised video explainers",
-                  "? AI consultant avatar twin",
-                  "? Interactive body map with hotspots",
-                  "? Behaviour change simulator with sliders",
-                  "? Doctor summary letter generator",
-                  "? Age-adaptive explanations (30 vs 70 yr old)",
+                  "-> Personalised video explainers",
+                  "-> AI consultant avatar twin",
+                  "-> Interactive body map with hotspots",
+                  "-> Behaviour change simulator with sliders",
+                  "-> Doctor summary letter generator",
+                  "-> Age-adaptive explanations (30 vs 70 yr old)",
                 ].map((item, idx) => (
                   <div key={idx} style={{ fontSize:16, color:"#6b8499", marginBottom:11 }}>{item}</div>
                 ))}
@@ -308,12 +308,12 @@ export default function PatientFriendlyInfo() {
               </div>
               <div style={{ background:"#f7faf9", border:"1px solid #d7e4ef", borderRadius:20, padding:"20px 22px", marginLeft:22 }}>
                 {[
-                  "? Multi-report trend tracking over time",
-                  "? Wearable data integration (glucose, HR)",
-                  "? Cross-condition interaction alerts",
-                  "? Institutional clinician dashboard",
-                  "? White-label for healthcare organisations",
-                  "? Global expansion - 50+ languages",
+                  "-> Multi-report trend tracking over time",
+                  "-> Wearable data integration (glucose, HR)",
+                  "-> Cross-condition interaction alerts",
+                  "-> Institutional clinician dashboard",
+                  "-> White-label for healthcare organisations",
+                  "-> Global expansion - 50+ languages",
                 ].map((item, idx) => (
                   <div key={idx} style={{ fontSize:16, color:"#6b8499", marginBottom:11 }}>{item}</div>
                 ))}
