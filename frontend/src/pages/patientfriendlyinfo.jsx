@@ -56,9 +56,9 @@ export default function PatientFriendlyInfo() {
             <div style={{ fontFamily:"'Lora',serif", fontSize:18, fontWeight:700, color:"#0e2033" }}>Vips<span style={{ color:"#2db89a" }}>Technologies</span></div>
           </div>
           <div style={{ display:"flex", gap:28 }}>
-            {["#about","#how-it-works","#product","#roadmap","#founders","#contact"].map((h,i) => (
+            {["#about","#how-it-works","#features","#roadmap","#founders","#contact"].map((h,i) => (
               <a key={i} href={h} className="pfi-nav-link" style={{ fontSize:14, fontWeight:600, color:"#6b8499", textDecoration:"none", transition:"color .2s" }}>
-                {["About","How It Works","Product","Roadmap","Team","Contact"][i]}
+                {["About","How It Works","Features","Roadmap","Team","Contact"][i]}
               </a>
             ))}
           </div>
@@ -429,11 +429,6 @@ export default function PatientFriendlyInfo() {
             <div>
               <div style={{ fontFamily:"'Lora',serif", fontSize:17, color:"#fff", fontWeight:700 }}>Vips<span style={{ color:"#2db89a" }}>Technologies</span></div>
               <div style={{ fontSize:11, color:"#2a4a6a", marginTop:3 }}>Making health understandable for everyone</div>
-            </div>
-            <div style={{ display:"flex", gap:22 }}>
-              {[["#about","About"],["#how-it-works","How It Works"],["#product","Product"],["#roadmap","Roadmap"],["#founders","Team"],["#contact","Contact"]].map(([h,l],i) => (
-                <a key={i} href={h} className="pfi-footer-link" style={{ fontSize:12, color:"#2a4a6a", textDecoration:"none", transition:"color .2s" }}>{l}</a>
-              ))}
             </div>
             <div style={{ textAlign:"right" }}>
               <div style={{ color:"#4a6a8a", fontSize:12 }}>© 2026 Vips Technologies</div>
