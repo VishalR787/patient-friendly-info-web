@@ -1,6 +1,8 @@
 # PatientFriendlyInfo
 
-PatientFriendlyInfo is a full-stack health-tech app that converts medical lab reports into plain, patient-friendly explanations.
+PatientFriendlyInfo is a full-stack health-tech app that converts medical lab reports into plain, patient-friendly explanations developed by vips technologies.
+
+*This just a demo and realtime website and the product will be rolled out very soon.....*
 
 ## Tech Stack
 - Frontend: React + Vite + React Router
