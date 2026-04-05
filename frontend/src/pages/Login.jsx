@@ -18,6 +18,8 @@ export default function Login() {
 
   const [successMsg, setSuccessMsg] = useState("");
 
+  const [showPassword, setShowPassword] = useState(false);
+
   const [showForgot, setShowForgot] = useState(false);
   const [fpEmail, setFpEmail] = useState("");
   const [fpOtp, setFpOtp] = useState("");
@@ -152,14 +154,23 @@ export default function Login() {
           />
 
           <label style={labelStyle}>Password</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Enter password"
-            autoComplete={mode === "login" ? "current-password" : "new-password"}
-            style={inputStyle}
-          />
+          <div style={{ position: "relative" }}>
+            <input
+              type={showPassword ? "text" : "password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Enter password"
+              autoComplete={mode === "login" ? "current-password" : "new-password"}
+              style={{ ...inputStyle, marginBottom: 0, paddingRight: 40 }}
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(v => !v)}
+              style={{ position: "absolute", right: 10, top: "50%", transform: "translateY(-50%)", background: "none", border: "none", cursor: "pointer", fontSize: 16, color: "#6b8499" }}
+            >
+              {showPassword ? "🙈" : "👁️"}
+            </button>
+          </div>
 
           {mode === "login" && (
             <button
