@@ -161,7 +161,7 @@ export default function Login() {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter password"
               autoComplete={mode === "login" ? "current-password" : "new-password"}
-              style={{ ...inputStyle, marginBottom: 0, paddingRight: 40, fontSize: 13 }}
+              style={{ ...inputStyle, marginBottom: 0, paddingRight: 30, fontSize: 13 }}
             />
             <button
               type="button"
