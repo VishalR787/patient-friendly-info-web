@@ -3,6 +3,7 @@ const cors = require('cors');
 const rateLimit = require('express-rate-limit');
 require('dotenv').config();
 const session = require("express-session");
+const MongoStore = require("connect-mongo");
 const routes = require('./routes/routes');
 const auth = require("./routes/auth");
 
@@ -13,7 +14,15 @@ app.use(session({
   secret: process.env.SESSION_SECRET || "dev-secret",
   resave: false,
   saveUninitialized: false,
-  cookie: { httpOnly: true, sameSite: "lax", secure: false },
+  store: MongoStore.create({
+    mongoUrl: process.env.MONGO_URI || "mongodb://127.0.0.1:27017/patientfriendlyinfo",
+    ttl: 14 * 24 * 60 * 60, // 14 days
+  }),
+  cookie: {
+    httpOnly: true,
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+    secure: process.env.NODE_ENV === "production",
+  },
 }));
 
 
