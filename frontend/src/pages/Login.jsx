@@ -236,6 +236,7 @@ const inputStyle = {
   padding: "10px 12px",
   borderRadius: 10,
   border: "1px solid #d7e4ef",
+  boxSizing: "border-box",
 };
 
 const submitStyle = {
