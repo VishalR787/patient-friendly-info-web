@@ -1,8 +1,59 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { checkAuth, getMainPageContent, logout } from "../features/analyzer/api";
+
+const DEFAULT_MAIN_CONTENT = {
+  heroBadge: "Health Technology · AI-Powered · Est. 2026",
+  heroTitleLine1: "Making health",
+  heroTitleHighlight: "understandable",
+  heroTitleLine2: "for everyone.",
+  heroDescription:
+    "PatientFriendlyInfo uses AI to translate complex medical lab reports into plain, friendly language - so every patient leaves their appointment informed, not confused.",
+  aboutTitle: "Why PatientFriendlyInfo exists.",
+  aboutPara1:
+    "Most patients leave with numbers and abbreviations they do not understand. That confusion leads to fear, missed follow-ups, and delayed action.",
+  aboutPara2:
+    "PatientFriendlyInfo closes that gap by converting clinical lab reports into clear, plain-language explanations patients can actually use.",
+  hiwTitle: "From report to understanding in under 60 seconds.",
+  hiwSubtitle:
+    "A simple four-step journey that takes a confusing lab report and turns it into clear, actionable health knowledge.",
+  hiwStep1Title: "Upload Your Report", hiwStep1Desc: "Paste your lab results as text. Your data is processed securely and never stored beyond your session.",
+  hiwStep2Title: "AI Parses & Analyses", hiwStep2Desc: "Our backend extracts every lab value, then the AI engine cross-references clinical thresholds to flag conditions.",
+  hiwStep3Title: "Plain English Generated", hiwStep3Desc: "A local language model generates friendly, clear explanations for every flagged condition — with precautions and risk timelines.",
+  hiwStep4Title: "Results Displayed", hiwStep4Desc: "Condition cards, severity badges, metric bars, and plain-English summaries — all in one clear, friendly interface.",
+  featuresTitle: "Everything patients need to understand their health.",
+  featuresSubtitle: "30 features across 6 categories — from core AI analysis to personalised video explainers.",
+  feat1Title: "AI Report Analysis", feat1Desc: "Upload any lab report. The AI detects every flagged condition by cross-referencing clinical thresholds — in seconds.",
+  feat2Title: "Plain English Explanations", feat2Desc: "Every medical term decoded clearly and warmly — the way a knowledgeable, caring friend would explain it.",
+  feat3Title: "Metric Visualisation", feat3Desc: "Colour-coded severity bars for every lab value — so patients instantly see what's normal, borderline, or high.",
+  feat4Title: "Personalised Video Explainers", feat4Desc: "An AI avatar speaks your specific results aloud, with anatomical animations synced to every word.",
+  feat5Title: "Behaviour Simulator", feat5Desc: '"What if I walked 30 mins daily?" Drag sliders to see projected impact on your results over 3–6 months.',
+  feat6Title: "20+ Languages", feat6Desc: "Same care, any language — with culturally relevant lifestyle and dietary advice for diverse communities.",
+  founder1Name: "Dr. Pushpakaran Munuswamy", founder1Role: "Chief Executive Officer",
+  founder1Bio:
+    "Dr. Pushpakaran is a Consultant Gastroenterologist with over 25 years of clinical experience. He qualified from Tamil Nadu Dr. MGR Medical University and trained at King's College Hospital, London, holding Fellowship of the Royal College of Physicians.\n\nA digital health pioneer, he holds a postgraduate diploma in Digital Health Leadership and serves as Clinical Lead for AI in Gastroenterology at the British Society of Gastroenterology.",
+  founder2Name: "Vishal Raghav V", founder2Role: "Chief Technology Officer",
+  founder2Bio:
+    "Vishal is a computer science researcher and software engineer specialising in AI, machine learning, and NLP. Currently pursuing his degree at SRM Institute of Science and Technology, he has published research in medical AI — including pioneering work on fine-tuning large language models for clinical lab report interpretation.\n\nAt VipsTechnologies , Vishal leads all technical development — from the core AI engine to the full-stack application architecture.",
+  roadmapTitle: "Where we are. Where we're going.",
+  roadmapSubtitle: "Our development roadmap across three phases - from the core platform we're building today to the full vision of PatientFriendlyInfo.",
+  phase1Title: "Phase 1 - Core Platform",
+  phase1Desc: "The foundation. A fully working AI report analyser that any patient can use - paste a lab report, get plain English explanations, severity scores, and actionable precautions.",
+  phase2Title: "Phase 2 - Video & Intelligence",
+  phase2Desc: "Taking the core platform to the next level - personalised video explainers, AI avatars, interactive body maps, and behaviour simulation tools that motivate real health change.",
+  phase3Title: "Phase 3 - Platform & Scale",
+  phase3Desc: "Full institutional integration, wearable data, cross-condition intelligence, and white-label solutions for healthcare organisations around the world.",
+  contactEmail: "hello@vips-technologies.com",
+  contactWebsite: "https://vips-technologies.vercel.app/",
+  contactStatus: "Currently in active development",
+  footerTagline: "Making health understandable for everyone",
+};
 
 export default function PatientFriendlyInfo() {
   const navigate = useNavigate();
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [loggedInUser, setLoggedInUser] = useState(null);
+  const [mainContent, setMainContent] = useState(DEFAULT_MAIN_CONTENT);
 
   // Inject Google Fonts
   useEffect(() => {
@@ -20,6 +71,24 @@ export default function PatientFriendlyInfo() {
     setTimeout(() => {
       document.querySelectorAll(".pfi-reveal").forEach(el => obs.observe(el));
     }, 100);
+
+    const loadMainContent = async () => {
+      const [me, contentRes] = await Promise.allSettled([checkAuth(), getMainPageContent()]);
+
+      if (me.status === "fulfilled" && me.value?.authenticated) {
+        setIsAdmin(!!me.value?.isAdmin);
+        setLoggedInUser(me.value?.username || null);
+      } else {
+        setIsAdmin(false);
+        setLoggedInUser(null);
+      }
+
+      if (contentRes.status === "fulfilled" && contentRes.value?.content) {
+        setMainContent(contentRes.value.content);
+      }
+    };
+
+    loadMainContent();
 
     return () => obs.disconnect();
   }, []);
@@ -63,7 +132,23 @@ export default function PatientFriendlyInfo() {
             ))}
           </div>
           <div style={{ display:"flex", gap:10, alignItems:"center" }}>
-            <button onClick={() => navigate("/app")} style={{ padding:"10px 20px", borderRadius:50, background:"#2db89a", border:"none", color:"#fff", cursor:"pointer", fontWeight:700, fontSize:13, fontFamily:"Nunito,sans-serif", boxShadow:"0 4px 14px rgba(45,184,154,.3)" }}>Try Demo →</button>
+            {isAdmin && (<button onClick={() => navigate("/admin/main-page")} style={{ padding:"10px 18px", borderRadius:50, background:"#0e2033", border:"none", color:"#fff", cursor:"pointer", fontWeight:700, fontSize:13, fontFamily:"Nunito,sans-serif" }}>Edit Main Page</button>)}
+            <button onClick={() => navigate("/app")} style={{ padding:"10px 20px", borderRadius:50, background:"#2db89a", border:"none", color:"#fff", cursor:"pointer", fontWeight:700, fontSize:13, fontFamily:"Nunito,sans-serif", boxShadow:"0 4px 14px rgba(45,184,154,.3)" }}>Try Demo</button>
+            {loggedInUser ? (
+              <div style={{ display:"flex", alignItems:"center", gap:8 }}>
+                <div style={{ fontSize:13, fontWeight:600, color:"#1e3448", background:"#edfaf7", border:"1px solid #b2e8da", borderRadius:50, padding:"6px 14px" }}>
+                  {loggedInUser}
+                </div>
+                <button
+                  onClick={async () => { await logout(); setLoggedInUser(null); setIsAdmin(false); navigate("/login"); }}
+                  style={{ padding:"8px 14px", borderRadius:50, background:"#fff", border:"1px solid #d7e4ef", color:"#1e3448", cursor:"pointer", fontWeight:700, fontSize:12, fontFamily:"Nunito,sans-serif" }}
+                >
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <button onClick={() => navigate("/login")} style={{ padding:"10px 18px", borderRadius:50, background:"#fff", border:"1px solid #d7e4ef", color:"#1e3448", cursor:"pointer", fontWeight:700, fontSize:13, fontFamily:"Nunito,sans-serif" }}>Login</button>
+            )}
           </div>
         </div>
       </nav>
@@ -75,13 +160,13 @@ export default function PatientFriendlyInfo() {
             <div style={{ animation:"pfi-fadeUp .7s ease both" }}>
               <div style={{ display:"inline-flex", alignItems:"center", gap:8, background:"#fff", border:"1px solid rgba(45,184,154,.3)", padding:"7px 18px", borderRadius:50, marginBottom:24, fontSize:12, fontWeight:700, color:"#1e8a74", boxShadow:"0 2px 12px rgba(45,184,154,.1)" }}>
                 <div style={{ width:8, height:8, borderRadius:"50%", background:"#2db89a", animation:"pfi-pulse 1.6s ease-in-out infinite" }}></div>
-                Health Technology · AI-Powered · Est. 2026
+                {mainContent.heroBadge}
               </div>
               <h1 style={{ fontFamily:"'Lora',serif", fontSize:"clamp(36px,5vw,54px)", color:"#0e2033", letterSpacing:"-.8px", marginBottom:20, lineHeight:1.15 }}>
-                Making health<br/><em style={{ fontStyle:"italic", color:"#2db89a" }}>understandable</em><br/>for everyone.
+                {mainContent.heroTitleLine1}<br/><em style={{ fontStyle:"italic", color:"#2db89a" }}>{mainContent.heroTitleHighlight}</em><br/>{mainContent.heroTitleLine2}
               </h1>
               <p style={{ fontSize:17, color:"#6b8499", lineHeight:1.8, marginBottom:36, maxWidth:470 }}>
-                PatientFriendlyInfo uses AI to translate complex medical lab reports into plain, friendly language — so every patient leaves their appointment informed, not confused.
+                {mainContent.heroDescription}
               </p>
               <div style={{ display:"flex", gap:14, flexWrap:"wrap", marginBottom:40 }}>
                 <button onClick={() => navigate("/demo?mode=demo")} className="pfi-btn-green" style={{ padding:"13px 28px", borderRadius:50, background:"#2db89a", border:"none", color:"#fff", fontWeight:700, fontSize:15, cursor:"pointer", fontFamily:"Nunito,sans-serif", boxShadow:"0 4px 18px rgba(45,184,154,.32)", transition:"all .22s" }}>Try Live Demo →</button>
@@ -148,13 +233,13 @@ export default function PatientFriendlyInfo() {
             <div className="pfi-reveal">
               <span style={{ display:"inline-block", padding:"5px 16px", borderRadius:50, fontSize:11, fontWeight:800, letterSpacing:"1.3px", textTransform:"uppercase", marginBottom:14, background:"#e8f8f5", color:"#1e8a74" }}>About</span>
               <h2 style={{ fontFamily:"'Lora',serif", fontSize:"clamp(26px,3.8vw,40px)", color:"#0e2033", letterSpacing:"-.6px", marginBottom:14 }}>
-                Why PatientFriendlyInfo exists.
+                {mainContent.aboutTitle}
               </h2>
               <p style={{ fontSize:15, color:"#6b8499", lineHeight:1.8, marginBottom:14 }}>
-                Most patients leave with numbers and abbreviations they do not understand. That confusion leads to fear, missed follow-ups, and delayed action.
+                {mainContent.aboutPara1}
               </p>
               <p style={{ fontSize:15, color:"#6b8499", lineHeight:1.8, marginBottom:20 }}>
-                PatientFriendlyInfo closes that gap by converting clinical lab reports into clear, plain-language explanations patients can actually use.
+                {mainContent.aboutPara2}
               </p>
               <div style={{ display:"flex", gap:10, flexWrap:"wrap" }}>
                 {["Clear language", "Action-focused guidance", "Built with clinicians", "Privacy-first workflow"].map((item, idx) => (
@@ -191,15 +276,15 @@ export default function PatientFriendlyInfo() {
         <div style={{ maxWidth:1080, margin:"0 auto", padding:"0 28px" }}>
           <div className="pfi-reveal" style={{ textAlign:"center", marginBottom:52 }}>
             <span style={{ display:"inline-block", padding:"5px 16px", borderRadius:50, fontSize:11, fontWeight:800, letterSpacing:"1.3px", textTransform:"uppercase", marginBottom:14, background:"rgba(45,184,154,.15)", color:"#2db89a" }}>How It Works</span>
-            <h2 style={{ fontFamily:"'Lora',serif", fontSize:"clamp(26px,3.8vw,40px)", color:"#fff", letterSpacing:"-.6px", marginBottom:14 }}>From report to understanding<br/>in under 60 seconds.</h2>
-            <p style={{ fontSize:15, color:"#5a7a99", lineHeight:1.75, maxWidth:520, margin:"0 auto" }}>A simple four-step journey that takes a confusing lab report and turns it into clear, actionable health knowledge.</p>
+            <h2 style={{ fontFamily:"'Lora',serif", fontSize:"clamp(26px,3.8vw,40px)", color:"#fff", letterSpacing:"-.6px", marginBottom:14 }}>{mainContent.hiwTitle}</h2>
+            <p style={{ fontSize:15, color:"#5a7a99", lineHeight:1.75, maxWidth:520, margin:"0 auto" }}>{mainContent.hiwSubtitle}</p>
           </div>
           <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:18, position:"relative" }}>
             {[
-              ["📄","Upload Your Report","Paste your lab results as text. Your data is processed securely and never stored beyond your session."],
-              ["🧠","AI Parses & Analyses","Our backend extracts every lab value, then the AI engine cross-references clinical thresholds to flag conditions."],
-              ["💬","Plain English Generated","A local language model generates friendly, clear explanations for every flagged condition — with precautions and risk timelines."],
-              ["✅","Results Displayed","Condition cards, severity badges, metric bars, and plain-English summaries — all in one clear, friendly interface."],
+              ["📄", mainContent.hiwStep1Title, mainContent.hiwStep1Desc],
+              ["🧠", mainContent.hiwStep2Title, mainContent.hiwStep2Desc],
+              ["💬", mainContent.hiwStep3Title, mainContent.hiwStep3Desc],
+              ["✅", mainContent.hiwStep4Title, mainContent.hiwStep4Desc],
             ].map(([icon,title,desc],i) => (
               <div key={i} className="pfi-hiw-step pfi-reveal" style={{ background:"#0f2540", borderRadius:18, padding:"26px 20px", border:"1px solid #1a3558", transition:"border-color .2s", position:"relative", transitionDelay:`${i*0.08}s` }}>
                 <div style={{ fontFamily:"'Lora',serif", fontSize:48, color:"rgba(255,255,255,.04)", position:"absolute", top:12, right:16, lineHeight:1 }}>0{i+1}</div>
@@ -217,17 +302,17 @@ export default function PatientFriendlyInfo() {
         <div style={{ maxWidth:1080, margin:"0 auto", padding:"0 28px" }}>
           <div className="pfi-reveal" style={{ textAlign:"center", marginBottom:48 }}>
             <span style={{ display:"inline-block", padding:"5px 16px", borderRadius:50, fontSize:11, fontWeight:800, letterSpacing:"1.3px", textTransform:"uppercase", marginBottom:14, background:"#e8f8f5", color:"#1e8a74" }}>Features</span>
-            <h2 style={{ fontFamily:"'Lora',serif", fontSize:"clamp(26px,3.8vw,40px)", color:"#0e2033", letterSpacing:"-.6px", marginBottom:14 }}>Everything patients need to<br/>understand their health.</h2>
-            <p style={{ fontSize:15, color:"#6b8499", lineHeight:1.75, maxWidth:520, margin:"0 auto" }}>30 features across 6 categories — from core AI analysis to personalised video explainers.</p>
+            <h2 style={{ fontFamily:"'Lora',serif", fontSize:"clamp(26px,3.8vw,40px)", color:"#0e2033", letterSpacing:"-.6px", marginBottom:14 }}>{mainContent.featuresTitle}</h2>
+            <p style={{ fontSize:15, color:"#6b8499", lineHeight:1.75, maxWidth:520, margin:"0 auto" }}>{mainContent.featuresSubtitle}</p>
           </div>
           <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:18 }}>
             {[
-              ["🔬","AI Report Analysis","Upload any lab report. The AI detects every flagged condition by cross-referencing clinical thresholds — in seconds.","#2db89a",null],
-              ["💬","Plain English Explanations","Every medical term decoded clearly and warmly — the way a knowledgeable, caring friend would explain it.","#ff8c6b",null],
-              ["📊","Metric Visualisation","Colour-coded severity bars for every lab value — so patients instantly see what's normal, borderline, or high.","#7c3aed",null],
-              ["🎬","Personalised Video Explainers","An AI avatar speaks your specific results aloud, with anatomical animations synced to every word.","#f5a623","Coming in v1.0"],
-              ["🎛️","Behaviour Simulator",'"What if I walked 30 mins daily?" Drag sliders to see projected impact on your results over 3–6 months.',"#2db89a","Coming in v1.0"],
-              ["🌍","20+ Languages","Same care, any language — with culturally relevant lifestyle and dietary advice for diverse communities.","#ff8c6b",null],
+              ["🔬", mainContent.feat1Title, mainContent.feat1Desc, "#2db89a", null],
+              ["💬", mainContent.feat2Title, mainContent.feat2Desc, "#ff8c6b", null],
+              ["📊", mainContent.feat3Title, mainContent.feat3Desc, "#7c3aed", null],
+              ["🎬", mainContent.feat4Title, mainContent.feat4Desc, "#f5a623", "Coming in v1.0"],
+              ["🎛️", mainContent.feat5Title, mainContent.feat5Desc, "#2db89a", "Coming in v1.0"],
+              ["🌍", mainContent.feat6Title, mainContent.feat6Desc, "#ff8c6b", null],
             ].map(([icon,title,desc,color,soon],i) => (
               <div key={i} className="pfi-feat pfi-reveal" style={{ background:"#fff", borderRadius:18, padding:"24px 20px", border:"1px solid #e0eaf3", borderTop:`3px solid ${color}`, transition:"transform .22s,box-shadow .22s", transitionDelay:`${i*0.06}s` }}>
                 <div style={{ fontSize:26, marginBottom:12 }}>{icon}</div>
@@ -250,11 +335,11 @@ export default function PatientFriendlyInfo() {
           </div>
           <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:28 }}>
             {[
-              { role:"Chief Executive Officer", roleClass:"ceo", name:"Dr. Pushpakaran Munuswamy", icon:"👨‍⚕️", iconBg:"linear-gradient(135deg,#e8f8f5,#c5f0e8)", roleColor:"#1e8a74", topBg:"linear-gradient(90deg,#2db89a,#5dd6be)",
-                bio:"Dr. Pushpakaran is a Consultant Gastroenterologist with over 25 years of clinical experience. He qualified from Tamil Nadu Dr. MGR Medical University and trained at King's College Hospital, London, holding Fellowship of the Royal College of Physicians.\n\nA digital health pioneer, he holds a postgraduate diploma in Digital Health Leadership and serves as Clinical Lead for AI in Gastroenterology at the British Society of Gastroenterology.",
+              { role: mainContent.founder1Role, name: mainContent.founder1Name, icon:"👨‍⚕️", iconBg:"linear-gradient(135deg,#e8f8f5,#c5f0e8)", roleColor:"#1e8a74", topBg:"linear-gradient(90deg,#2db89a,#5dd6be)",
+                bio: mainContent.founder1Bio,
                 tags:["Consultant Gastroenterologist","BSG AI Lead","Digital Health Leadership","Fellow, Royal College of Physicians"] },
-              { role:"Chief Technology Officer", roleClass:"cto", name:"Vishal Raghav V", icon:"👨‍💻", iconBg:"linear-gradient(135deg,#fff2ee,#ffd5c5)", roleColor:"#b85030", topBg:"linear-gradient(90deg,#ff8c6b,#ffb89e)",
-                bio:"Vishal is a computer science researcher and software engineer specialising in AI, machine learning, and NLP. Currently pursuing his degree at SRM Institute of Science and Technology, he has published research in medical AI — including pioneering work on fine-tuning large language models for clinical lab report interpretation.\n\nAt VipsTechnologies , Vishal leads all technical development — from the core AI engine to the full-stack application architecture.",
+              { role: mainContent.founder2Role, name: mainContent.founder2Name, icon:"👨‍💻", iconBg:"linear-gradient(135deg,#fff2ee,#ffd5c5)", roleColor:"#b85030", topBg:"linear-gradient(90deg,#ff8c6b,#ffb89e)",
+                bio: mainContent.founder2Bio,
                 tags:["AI & Machine Learning","Medical NLP","Full-Stack Engineering","LLM Research"] },
             ].map((f,i) => (
               <div key={i} className="pfi-fc pfi-reveal" style={{ background:"#fff", border:"1px solid #e0eaf3", borderRadius:24, padding:"34px 30px", boxShadow:"0 4px 24px rgba(14,32,51,.05)", transition:"transform .25s,box-shadow .25s", position:"relative", overflow:"hidden", transitionDelay:`${i*0.1}s` }}>
@@ -277,9 +362,9 @@ export default function PatientFriendlyInfo() {
         <div style={{ maxWidth:1080, margin:"0 auto", padding:"0 28px" }}>
           <div className="pfi-reveal" style={{ textAlign:"center", marginBottom:44 }}>
             <span style={{ display:"inline-block", padding:"5px 16px", borderRadius:50, fontSize:11, fontWeight:800, letterSpacing:"1.3px", textTransform:"uppercase", marginBottom:14, background:"#e8f8f5", color:"#1e8a74" }}>Product Roadmap</span>
-            <h2 style={{ fontFamily:"'Lora',serif", fontSize:"clamp(26px,3.8vw,40px)", color:"#0e2033", letterSpacing:"-.6px", marginBottom:14 }}>Where we are.<br/>Where we're going.</h2>
+            <h2 style={{ fontFamily:"'Lora',serif", fontSize:"clamp(26px,3.8vw,40px)", color:"#0e2033", letterSpacing:"-.6px", marginBottom:14 }}>{mainContent.roadmapTitle}</h2>
             <p style={{ fontSize:15, color:"#6b8499", lineHeight:1.75, maxWidth:660, margin:"0 auto" }}>
-              Our development roadmap across three phases - from the core platform we're building today to the full vision of PatientFriendlyInfo.
+              {mainContent.roadmapSubtitle}
             </p>
           </div>
 
@@ -292,9 +377,9 @@ export default function PatientFriendlyInfo() {
                   <span style={{ width:8, height:8, borderRadius:"50%", background:"#2db89a", display:"inline-block" }}></span>
                   <span style={{ fontSize:11, fontWeight:800, color:"#1e8a74", letterSpacing:"1px" }}>IN PROGRESS - 2026</span>
                 </div>
-                <h3 style={{ fontFamily:"'Lora',serif", fontSize:"clamp(28px,3vw,44px)", color:"#0e2033", marginBottom:8, lineHeight:1.15 }}>Phase 1 - Core Platform</h3>
+                <h3 style={{ fontFamily:"'Lora',serif", fontSize:"clamp(28px,3vw,44px)", color:"#0e2033", marginBottom:8, lineHeight:1.15 }}>{mainContent.phase1Title}</h3>
                 <p style={{ fontSize:14, color:"#6b8499", lineHeight:1.75 }}>
-                  The foundation. A fully working AI report analyser that any patient can use - paste a lab report, get plain English explanations, severity scores, and actionable precautions.
+                  {mainContent.phase1Desc}
                 </p>
               </div>
               <div style={{ background:"#f7faf9", border:"1px solid #d7e4ef", borderRadius:20, padding:"20px 22px", marginLeft:22 }}>
@@ -331,9 +416,9 @@ export default function PatientFriendlyInfo() {
                 <div style={{ display:"inline-flex", alignItems:"center", gap:8, background:"rgba(255,140,107,.12)", border:"1px solid rgba(255,140,107,.25)", padding:"5px 12px", borderRadius:20, marginBottom:12 }}>
                   <span style={{ fontSize:11, fontWeight:800, color:"#b85030", letterSpacing:"1px" }}>COMING NEXT - 2026-2027</span>
                 </div>
-                <h3 style={{ fontFamily:"'Lora',serif", fontSize:"clamp(28px,3vw,44px)", color:"#0e2033", marginBottom:8, lineHeight:1.15 }}>Phase 2 - Video & Intelligence</h3>
+                <h3 style={{ fontFamily:"'Lora',serif", fontSize:"clamp(28px,3vw,44px)", color:"#0e2033", marginBottom:8, lineHeight:1.15 }}>{mainContent.phase2Title}</h3>
                 <p style={{ fontSize:14, color:"#6b8499", lineHeight:1.75 }}>
-                  Taking the core platform to the next level - personalised video explainers, AI avatars, interactive body maps, and behaviour simulation tools that motivate real health change.
+                  {mainContent.phase2Desc}
                 </p>
               </div>
               <div style={{ position:"absolute", left:"50%", top:"50%", transform:"translate(-50%, -50%)", width:28, height:28, borderRadius:"50%", background:"rgba(255,140,107,.2)", display:"flex", alignItems:"center", justifyContent:"center" }}>
@@ -346,9 +431,9 @@ export default function PatientFriendlyInfo() {
                 <div style={{ display:"inline-flex", alignItems:"center", gap:8, background:"#e8eef5", border:"1px solid #c8d8ec", padding:"5px 12px", borderRadius:20, marginBottom:12 }}>
                   <span style={{ fontSize:11, fontWeight:800, color:"#2a4a6a", letterSpacing:"1px" }}>ON THE HORIZON - 2027+</span>
                 </div>
-                <h3 style={{ fontFamily:"'Lora',serif", fontSize:"clamp(28px,3vw,44px)", color:"#0e2033", marginBottom:8, lineHeight:1.15 }}>Phase 3 - Platform & Scale</h3>
+                <h3 style={{ fontFamily:"'Lora',serif", fontSize:"clamp(28px,3vw,44px)", color:"#0e2033", marginBottom:8, lineHeight:1.15 }}>{mainContent.phase3Title}</h3>
                 <p style={{ fontSize:14, color:"#6b8499", lineHeight:1.75 }}>
-                  Full institutional integration, wearable data, cross-condition intelligence, and white-label solutions for healthcare organisations around the world.
+                  {mainContent.phase3Desc}
                 </p>
               </div>
               <div style={{ background:"#f7faf9", border:"1px solid #d7e4ef", borderRadius:20, padding:"20px 22px", marginLeft:22 }}>
@@ -381,7 +466,7 @@ export default function PatientFriendlyInfo() {
               <h2 style={{ fontFamily:"'Lora',serif", fontSize:"clamp(26px,3.8vw,40px)", color:"#0e2033", letterSpacing:"-.6px", marginBottom:14 }}>We'd love to hear from you.</h2>
               <p style={{ fontSize:15, color:"#6b8499", lineHeight:1.8, marginBottom:28 }}>Whether you're a patient, a healthcare professional, a potential partner, or simply someone who believes in what we're building — our door is always open.</p>
               <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
-                {[["🌐","https://vips-technologies.vercel.app/","Our home on the web"],["✉️","hello@vips-technologies.com","We reply within 24 hours"],["🚀","Currently in active development","Demo available — full launch coming soon"]].map(([icon,text,sub],i) => (
+                {[["🌐", mainContent.contactWebsite, "Our home on the web"],["✉️", mainContent.contactEmail, "We reply within 24 hours"],["🚀", mainContent.contactStatus, "Demo available — full launch coming soon"]].map(([icon,text,sub],i) => (
                   <div key={i} style={{ display:"flex", gap:12, alignItems:"center" }}>
                     <div style={{ width:38, height:38, borderRadius:11, flexShrink:0, background:"#e8f8f5", border:"1px solid rgba(45,184,154,.2)", display:"flex", alignItems:"center", justifyContent:"center", fontSize:16 }}>{icon}</div>
                     <div>
@@ -428,7 +513,7 @@ export default function PatientFriendlyInfo() {
           <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", flexWrap:"wrap", gap:16 }}>
             <div>
               <div style={{ fontFamily:"'Lora',serif", fontSize:17, color:"#fff", fontWeight:700 }}>Vips<span style={{ color:"#2db89a" }}>Technologies</span></div>
-              <div style={{ fontSize:11, color:"#2a4a6a", marginTop:3 }}>Making health understandable for everyone</div>
+              <div style={{ fontSize:11, color:"#2a4a6a", marginTop:3 }}>{mainContent.footerTagline}</div>
             </div>
             <div style={{ textAlign:"right" }}>
               <div style={{ color:"#4a6a8a", fontSize:12 }}>© 2026 Vips Technologies</div>
@@ -439,4 +524,5 @@ export default function PatientFriendlyInfo() {
     </div>
   );
 }
+
 

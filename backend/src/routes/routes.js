@@ -1,11 +1,27 @@
 const express = require('express');
 const router = express.Router();
-const { analyseReport, getDemoReport } = require('../controllers/controllers');
+const {
+  analyseReport,
+  getDemoReport,
+  createFeature,
+  deleteFeature,
+  getVipsContent,
+  updateVipsContent,
+  getMainPageContent,
+  updateMainPageContent,
+} = require('../controllers/controllers');
+const { requireAdmin } = require("../middleware/adminAuth");
 
 // POST /api/analyse  — main analysis endpoint
 router.post('/analyse', analyseReport);
-
-// GET /api/demo — returns pre-loaded sample for demo mode
 router.get('/demo', getDemoReport);
+router.get('/vips-content', getVipsContent);
+router.get('/main-page-content', getMainPageContent);
+router.put('/vips-content', requireAdmin, updateVipsContent);
+router.put('/main-page-content', requireAdmin, updateMainPageContent);
+
+// admin-only example
+router.post("/feature", requireAdmin, createFeature);
+router.delete("/feature/:id", requireAdmin, deleteFeature);
 
 module.exports = router;

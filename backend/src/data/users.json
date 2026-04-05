@@ -1,0 +1,23 @@
+[
+  {
+    "id": "cc213622-b2cb-44e3-b12e-da4440e011af",
+    "name": "Vishal Raghav V",
+    "email": "admin@gmail.com",
+    "passwordHash": "b4cb0d90cbe42591474e8f175e2e59d4:eea4fe082c37bbce04f6eac1e08380ff7285582a53ff7a19662fa1fdfeabf86770abcd21297a06aee876a8334bcec403f04d00322a6588bb01d4b5430738a29e",
+    "createdAt": "2026-04-04T19:12:10.163Z"
+  },
+  {
+    "id": "94b1e65f-f2dd-4a80-8448-147d7bf2e8e9",
+    "name": "vv0636",
+    "email": "vv0636@srmist.edu.in",
+    "passwordHash": "15337f80ada306617f002389f4c07e12:3214d1a0c1e440f006ea53f7b5903a696da44b457b8c38309b30190bdda618f9bf343c7f215032bc8ee72eafd2c527c66ce0a8b97aec7c798bd15510d0c6c7f6",
+    "createdAt": "2026-04-04T19:55:04.676Z"
+  },
+  {
+    "id": "35b10cfb-5a2c-460f-a144-f93df612b320",
+    "name": "Vishal Raghav V",
+    "email": "vvraghav16@gmail.com",
+    "passwordHash": "ca481a287d2acbd35c41ab27a6564ca9:cb8a0dcdd6986df135732dc6ef24e93fe34acb2d62c4d30fe2204deeb6189a83684957c408538a05cffdd11647c55c7097edb7f7b48c2c723178066c50c9a17f",
+    "createdAt": "2026-04-05T05:01:09.221Z"
+  }
+]

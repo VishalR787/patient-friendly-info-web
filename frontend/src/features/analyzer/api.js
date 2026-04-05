@@ -1,7 +1,10 @@
 import axios from "axios";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "/api";
-const client = axios.create({ baseURL: API_BASE_URL });
+const client = axios.create({
+  baseURL: API_BASE_URL,
+  withCredentials: true,
+});
 
 const LOCAL_DEMO_RESPONSE = {
   success: true,
@@ -19,7 +22,7 @@ const LOCAL_DEMO_RESPONSE = {
       name: "Type 2 Diabetes Mellitus",
       medicalTerm: "Hyperglycaemia / HbA1c Elevation",
       severity: "high",
-      icon: "🩸",
+      icon: "B",
       plainEnglish:
         "Your HbA1c of 7.9% means your blood sugar has been consistently high for the past 3 months. This is above the diabetic range and needs follow-up care.",
       precautions: [
@@ -38,7 +41,7 @@ const LOCAL_DEMO_RESPONSE = {
       name: "High Cholesterol",
       medicalTerm: "Hypercholesterolaemia",
       severity: "high",
-      icon: "🫀",
+      icon: "H",
       plainEnglish:
         "Your LDL cholesterol is above the ideal range. Over time, this can narrow blood vessels and increase cardiovascular risk.",
       precautions: [
@@ -57,7 +60,7 @@ const LOCAL_DEMO_RESPONSE = {
       name: "Stage 1 Hypertension",
       medicalTerm: "Hypertension Grade 1",
       severity: "borderline",
-      icon: "💢",
+      icon: "P",
       plainEnglish:
         "Your blood pressure is elevated and should be monitored closely. Persistent high pressure can strain the heart and blood vessels.",
       precautions: [
@@ -84,7 +87,6 @@ const isValidDemoPayload = (data) => (
 
 export const analyseReport = async (reportText) => {
   const { data } = await client.post("/analyse", { reportText });
-  console.log("API response:", data);
   return data;
 };
 
@@ -92,13 +94,64 @@ export const loadDemo = async () => {
   try {
     const { data } = await client.get("/demo");
     if (isValidDemoPayload(data)) {
-      console.log("Demo response (API):", data);
       return data;
     }
-    console.warn("Demo API returned non-JSON or unexpected payload, using local demo data.");
     return LOCAL_DEMO_RESPONSE;
-  } catch (err) {
-    console.warn("Demo API unavailable, using local demo data.");
+  } catch {
     return LOCAL_DEMO_RESPONSE;
   }
+};
+
+export const login = async (identifier, password) => {
+  const { data } = await client.post("/auth/login", { identifier, password });
+  return data;
+};
+
+export const register = async ({ name, email, password }) => {
+  const { data } = await client.post("/auth/register", { name, email, password });
+  return data;
+};
+
+export const logout = async () => {
+  const { data } = await client.post("/auth/logout");
+  return data;
+};
+
+export const checkAuth = async () => {
+  const { data } = await client.get("/auth/me");
+  return data;
+};
+
+export const requestPasswordOtp = async (email) => {
+  const { data } = await client.post("/auth/forgot-password/request", { email });
+  return data;
+};
+
+export const resetPasswordWithOtp = async ({ email, otp, newPassword }) => {
+  const { data } = await client.post("/auth/forgot-password/reset", {
+    email,
+    otp,
+    newPassword,
+  });
+  return data;
+};
+
+export const getVipsContent = async () => {
+  const { data } = await client.get("/vips-content");
+  return data;
+};
+
+export const updateVipsContent = async (content) => {
+  const { data } = await client.put("/vips-content", content);
+  return data;
+};
+
+export const getMainPageContent = async () => {
+  const { data } = await client.get("/main-page-content");
+  return data;
+};
+
+export const updateMainPageContent = async (content) => {
+  const { data } = await client.put("/main-page-content", content);
+  return data;
 };

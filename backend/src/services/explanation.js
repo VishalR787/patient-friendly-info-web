@@ -1,13 +1,19 @@
 const axios = require("axios");
+const OLLAMA_CONFIG = require("../config/ollama");
 
-const OLLAMA_BASE_URL = process.env.OLLAMA_BASE_URL || "http://localhost:11434";
-const OLLAMA_MODEL = process.env.OLLAMA_MODEL || "llama3";
+const OLLAMA_BASE_URL = OLLAMA_CONFIG.baseUrl;
+const OLLAMA_MODEL = OLLAMA_CONFIG.model;
 
 const askOllama = async (prompt) => {
   try {
     const response = await axios.post(
       `${OLLAMA_BASE_URL}/api/generate`,
-      { model: OLLAMA_MODEL, prompt, stream: false, options: { temperature: 0.4, num_predict: 200 } },
+      {
+        model: OLLAMA_MODEL,
+        prompt,
+        stream: false,
+        options: OLLAMA_CONFIG.options,
+      },
       { timeout: 15000 }
     );
     return response.data.response?.trim() || null;
@@ -55,8 +61,24 @@ const generateExplanations = async (input) => {
     conditions.map(async (condition) => {
       if (!condition) return null;
       try {
+        const metricName = condition.triggerMetric?.name || "Unknown metric";
+        const metricValue = condition.triggerMetric?.value ?? "unknown";
+        const metricUnit = condition.triggerMetric?.unit || "";
+        const severity = condition.severity || "unknown";
+
+        const prompt = [
+          "You are a careful clinician assistant.",
+          "Write exactly 2 short sentences for a patient in simple English.",
+          "No diagnosis certainty language, no fear wording, no bullet points.",
+          `Condition: ${condition.name}`,
+          `Severity: ${severity}`,
+          `Metric: ${metricName}`,
+          `Measured value: ${metricValue} ${metricUnit}`,
+          "Output only the final 2-sentence explanation.",
+        ].join("\n");
+
         const aiExplanation = condition.triggerMetric
-          ? await askOllama(`Explain in 2 friendly sentences for a patient: ${condition.name} - value ${condition.triggerMetric?.value} ${condition.triggerMetric?.unit}`)
+          ? await askOllama(prompt)
           : null;
 
         return {
