@@ -9,6 +9,8 @@ const auth = require("./routes/auth");
 
 const app = express();
 
+app.set('trust proxy', 1);
+
 // ── SESSIONS ──
 app.use(session({
   secret: process.env.SESSION_SECRET || "dev-secret",
